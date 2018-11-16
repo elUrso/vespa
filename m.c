@@ -69,3 +69,11 @@ char * Mpack_str(MPack * arg) {
     exit(EXIT_FAILURE);
     return 0;
 }
+
+
+MObj * Mpack_Obj(MPack * arg) {
+    if(STRcmp(arg->type, "Obj")) return (MObj *) arg->value;
+    puts("Err Mpack_Obj");
+    exit(EXIT_FAILURE);
+    return 0;
+}
