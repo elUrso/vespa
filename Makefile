@@ -12,7 +12,7 @@ vespa: $(OBJS)
 test: $(OBJS) $(TESTS)
 	$(CC) list.test.o $(OBJS) -o test.list
 	./test.list && echo "List Passed" || echo "List Failed";
-	rm test*
+
 clear:
 	rm *.o
 
