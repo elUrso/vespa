@@ -18,10 +18,11 @@ struct state {
 
 /* Define methods names */
 
-static char * methods[3] = {
+static char * methods[4] = {
     "insert",
     "query",
-    "remove"
+    "remove",
+    NULL
 };
 
 /* Define methods itselves */
