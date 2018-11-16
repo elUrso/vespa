@@ -13,6 +13,7 @@ struct state {
     char * shortDesc;
     char * longDesc;
     MObj * objList;
+    char bool_long_;
 };
 
 static char * male[4] = {
@@ -25,12 +26,45 @@ static char * female[4] = {
 
 /* Define methods names */
 
-static char * methods[0] = {
+static char * methods[6] = {
+    "get name", "get shortDesc", "get longDesc", "get Desc", "get List", NULL
 };
 
 /* Define methods itselves */
 
-static void * (* action[0]) (void * self, void * arg) = {
+static void * _get_name (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    return state->name;
+}
+
+static void * _get_short (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    return state->shortDesc;
+}
+
+static void * _get_long (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    return state->longDesc;
+}
+static void * _get_desc (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    if(state->bool_long_) return state->shortDesc;
+    state->bool_long_ = 1;
+    return state->longDesc;
+}
+
+static void * _get_list (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    return state->objList;
+}
+
+static void * (* action[5]) (void * self, void * arg) = {
+    _get_name, _get_short, _get_long, _get_desc, _get_list
 };
 
 static char * class = "Element";
@@ -62,6 +96,7 @@ MObj * MElement (MObj * self, MPack * _arg) {
     state->shortDesc = shortDesc;
     state->longDesc = longDesc;
     state->objList = Mnew(MList, NULL);
+    state->bool_long_  = 0;
     /*convetion*/
     Mpack_free(_arg);
 
