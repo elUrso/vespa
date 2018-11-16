@@ -2,3 +2,36 @@ MAC0216 - TecProg
 
 Projeto VESPA
 
+Esse projeto está sendo realizado pelos alunos:
+
+Vitor Pereira da Silva
+nºUSP 10263531
+
+Lucas Medeiros Sobrinho de Sousa
+nºUSP 09833002
+
+## Organização do projeto:
+
+O projeto está sendo feito utilizando make e uma biblioteca de autoria do grupo chamada de Meta Library.
+Ela já foi apresentada ao professor Gubi que pediu que explicasse seu funcionamento de forma breve já que ela altera parte da estrutura do programa.
+
+A Meta library adicionas algumas funcionalidades de Orientação Objeto ao projeto e com os próprios verbos de ação já ficam implementados dentro do funcionamento da biblioteca.
+
+A biblioteca basicamente gera meios uniformes de chamar métodos dos objetos e é bem similar ao Smalltalk, onde os comando são enviados num formato de mensagem.
+
+No caso, Mcall é um método que recebe o alvo, a string que identifica o método que vai lidar com a mensagem e o MPack, que é a mensagem em si.
+
+O MPack é do estilo de lista ligada e fica no heap.
+
+Os objetos são definidos usando funções 'factory', e por isso nos seus .h só tem uma declaração.
+
+Além disso existe arquivos .test.c que contém código para testar os módulos.
+
+Para montar o programa, use make ou make vespa, para testar, use make test.
+
+
+## Para testar:
+
+Como nesse momento o jogo é para rodar uma simulação, ao executar o ./vespa, ele roda com um AutoQuery, que joga sozinho o jogo.
+Mas o switch -q troca o modo de query e assim o comando ./vespa -q roda ele como UserQuery e te permite jogar o jogo do jeito que está.
+
