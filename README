@@ -33,5 +33,3 @@ Para montar o programa, use make ou make vespa, para testar, use make test.
 ## Para testar:
 
 Como nesse momento o jogo é para rodar uma simulação, ao executar o ./vespa, ele roda com um AutoQuery, que joga sozinho o jogo.
-Mas o switch -q troca o modo de query e assim o comando ./vespa -q roda ele como UserQuery e te permite jogar o jogo do jeito que está.
-
