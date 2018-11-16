@@ -64,7 +64,7 @@ int Mpack_int(MPack * arg) {
 }
 
 char * Mpack_str(MPack * arg) {
-    if(STRcmp(arg->type, "str")) return (char *) (arg->value);
+    if(STRcmp(arg->type, "str")) return STRcp((char *) (arg->value));
     puts("Err Mpack_char");
     exit(EXIT_FAILURE);
     return 0;

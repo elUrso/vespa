@@ -11,6 +11,18 @@ int STRcmp(char * a, char * b) {
     return same;
 }
 
+char * STRcp(char * a) {
+    int i;
+    for(i = 0; a[i] != 0; i++);
+    i++;
+    char * str = malloc(sizeof(char) * i);
+    if(str == NULL) exit(EXIT_FAILURE);
+    for(i = 0; a[i] != 0; i++)
+        str[i] = a[i];
+    str[i] = a[i];
+    return str;
+}
+
 int STRquery(char ** source, char * str) {
     int q = -1;
     for(int i = 0; source[i] != NULL; i++) {
