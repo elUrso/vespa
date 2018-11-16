@@ -38,4 +38,7 @@ int Mpack_int(MPack * arg);
 char * Mpack_str(MPack * arg);
 MObj * Mpack_Obj(MPack * arg);
 
+extern char true;
+extern char false;
+
 #endif
