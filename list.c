@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Internal data structures */
 struct node {
     MObj * value;
     char * id;
@@ -15,12 +16,15 @@ struct state {
     struct node * head;
 };
 
+/* Define methods names */
+
 static char * methods[3] = {
     "insert",
     "query",
     "remove"
 };
 
+/* Define methods itselves */
 static void * insert (void * _self, void * _arg) {
     MObj * self = (MObj *) _self;
     MPack * arg = (MPack *) _arg;
@@ -31,6 +35,7 @@ static void * insert (void * _self, void * _arg) {
     char * str = Mpack_str(arg->next);
     struct state * state = self->_state;
     struct node * node = malloc(sizeof(struct node));
+    Mpack_free(_arg);
     if(node == NULL) {
         puts("Err MList insert");
         exit(EXIT_FAILURE);
@@ -39,6 +44,7 @@ static void * insert (void * _self, void * _arg) {
     node->next = state->head;
     node->id = str;
     state->head = node;
+    state->size = state->size + 1;
     return NULL;
 }
 
@@ -53,6 +59,7 @@ static void * query (void * _self, void * _arg) {
     char * target = Mpack_str(arg);
     struct state * state = self->_state;
     struct node * n = state->head;
+    Mpack_free(_arg);
     while(n != NULL) {
         if(STRcmp(target, n->id)) {
             q = n->value;
@@ -63,9 +70,38 @@ static void * query (void * _self, void * _arg) {
     return q;
 }
 
-/*Continue, needs to define free*/
-static void * _remove (void * _self, void * arg) {
-    return NULL;
+static void * _remove (void * _self, void * _arg) {
+    void * q = NULL;
+    MObj * self = (MObj *) _self;
+    MPack * arg = (MPack *) _arg;
+    if(arg == NULL) {
+        puts("Err MList remove");
+        exit(EXIT_FAILURE);
+    }
+    char * target = Mpack_str(arg);
+    struct state * state = self->_state;
+    struct node * prev = NULL;
+    struct node * n = state->head;
+    struct node * next = n->next;
+    Mpack_free(_arg);
+    while(n != NULL) {
+        if(STRcmp(target, n->id)) {
+            q = n->value;
+            break;
+        }
+        prev = n;
+        n = next;
+        next = n->next;
+    }
+    if(n == NULL) return q; /*Item was not found*/
+    if(prev == NULL) {
+        state->head = next;
+    } else {
+        prev->next = next;
+    }
+    free(n);
+    state->size = state->size - 1;
+    return q;
 }
 
 static void * (* action[3]) (void * self, void * arg) = {
@@ -74,6 +110,19 @@ static void * (* action[3]) (void * self, void * arg) = {
 
 static char * class = "List";
 
+static void _free (void * _self) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    struct node * q = state->head;
+    struct node * p;
+    while(q != NULL) {
+        p = q->next;
+        free(q);
+        q = p;
+    }
+    free(state);
+    free(_self);
+}
 
 
 MObj * MList (MObj * self, MPack * arg) {
@@ -83,6 +132,7 @@ MObj * MList (MObj * self, MPack * arg) {
         exit(EXIT_FAILURE);
     }
     p->size = 0;
+    p->head = NULL;
     /*convetion*/
     Mpack_free(arg);
 
@@ -97,7 +147,7 @@ MObj * MList (MObj * self, MPack * arg) {
     self->_Self = self;
     self->_Child = NULL;
 
-    self->_free = NULL;
+    self->_free = _free;
 
     return self;
 }
