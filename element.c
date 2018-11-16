@@ -72,6 +72,10 @@ static char * class = "Element";
 static void _free (void * _self) {
     MObj * self = (MObj *) _self;
     struct state * state = self->_state;
+    free(state->name);
+    free(state->shortDesc);
+    free(state->longDesc);
+    Mfree(state->objList);
     free(state);
     free(self);
 }
