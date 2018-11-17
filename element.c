@@ -26,8 +26,8 @@ static char * female[4] = {
 
 /* Define methods names */
 
-static char * methods[6] = {
-    "get name", "get shortDesc", "get longDesc", "get Desc", "get List", NULL
+static char * methods[7] = {
+    "get name", "get shortDesc", "get longDesc", "get Desc", "get List", "visited?", NULL
 };
 
 /* Define methods itselves */
@@ -63,8 +63,14 @@ static void * _get_list (void * _self, void * _arg) {
     return state->objList;
 }
 
-static void * (* action[5]) (void * self, void * arg) = {
-    _get_name, _get_short, _get_long, _get_desc, _get_list
+static void * _visited (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    return state->bool_long_?&true:&false;
+}
+
+static void * (* action[6]) (void * self, void * arg) = {
+    _get_name, _get_short, _get_long, _get_desc, _get_list, _visited
 };
 
 static char * class = "Element";
