@@ -36,6 +36,7 @@ MPack * Mpack(void * value, char * type, void * next);
 void Mpack_free(MPack * pack);
 int Mpack_int(MPack * arg);
 char * Mpack_str(MPack * arg);
+char Mpack_bool(MPack * arg);
 MObj * Mpack_Obj(MPack * arg);
 
 extern char true;

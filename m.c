@@ -57,22 +57,28 @@ void Mpack_free(MPack * pack) {
 
 
 int Mpack_int(MPack * arg) {
-    if(STRcmp(arg->type, "int")) return *((int *)(arg->value));
+    if(arg != NULL && STRcmp(arg->type, "int")) return *((int *)(arg->value));
     puts("Err Mpack_int");
     exit(EXIT_FAILURE);
     return 0;
 }
 
 char * Mpack_str(MPack * arg) {
-    if(STRcmp(arg->type, "str")) return STRcp((char *) (arg->value));
+    if(arg != NULL && STRcmp(arg->type, "str")) return STRcp((char *) (arg->value));
     puts("Err Mpack_char");
     exit(EXIT_FAILURE);
     return 0;
 }
 
+char Mpack_bool(MPack * arg) {
+    if(arg != NULL && STRcmp(arg->type, "bool")) return arg->value == &true ? 1 : 0;
+    puts("Err Mpack_bool");
+    exit(EXIT_FAILURE);
+    return 0;
+}
 
 MObj * Mpack_Obj(MPack * arg) {
-    if(STRcmp(arg->type, "Obj")) return (MObj *) arg->value;
+    if(arg != NULL && STRcmp(arg->type, "Obj")) return (MObj *) arg->value;
     puts("Err Mpack_Obj");
     exit(EXIT_FAILURE);
     return 0;
