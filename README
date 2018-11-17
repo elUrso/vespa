@@ -33,3 +33,45 @@ Para montar o programa, use make ou make vespa, para testar, use make test.
 ## Para testar:
 
 Como nesse momento o jogo é para rodar uma simulação, ao executar o ./vespa, ele roda com um AutoQuery, que joga sozinho o jogo.
+
+## História
+
+Para essa estapa estamos usando uma ideia de uma amiga, então os créditos da ideia é dela. Mas a históira é de autoria e feita com consultoria da idealizadora para manter o espírito.
+O conceito explora uma espécie de vespa que tem um veneno "zumbificador", que faz com que o inseto alvo tenha o cérebro hackeado e entre em modo de "comer apenas". Ela injeta seu ovos no inserto que vai comendo até que os ovos racham e ele é comido vivo.
+
+Um laboratório estaria fazendo pesquisas para usar parte do mecanismo do veneno em seres humanos e assim vai.
+
+O jogo nesse caso se passa no começo de um problema que acaba ocorrendo nos laboratórios e o objetivo do jogador é escapar de lá vivo.
+
+Para estruturar o jogo está sendo escrito uma história em formato de narrativa linear e por isso da pra contar a história tanto jogando quando lendo.
+
+Agora seguem os primeiros trechos escritos:
+
+A vespa
+
+	– Droga Katie, você tinha mesmo the tentar roubar a droga da fórmula?! Você deve saber o que vai acontecer com você agora…
+	Logo depois, João olhou bem nos olhos dela com uma expressão triste, deu-lhe um abraço e receitou algumas palavras em seu ouvido. Já deixando a sala ele ordenou:
+	– Limpem a memória dela… Me desculpe.
+
+	– João! Não, não fui eu! Não foi minha culpa, acredita em mim! Por favor, não me faça esquecer tudo…
+	Mas ele já havia deixado a sala. Katie foi levada ao complexo de controle de memória e teve suas memórias apagadas por uma droga. Isso foi tudo o que ele conseguia se lembrar.
+
+1. A sala trancada
+
+	Ela acordou um uma cama. A sala estava vazia, era branca e tinha apenas a cama, não havia portas nem janelas. Abrindo bem os olhos, tudo era muito claro, havia apenas um interruptor branco.
+	Pensou em ligar o interruptor, mas hesitou, sentia algo ruim vindo de la. Quem seria o tal João? Seria mesmo seu nome Katie? O que ela havia roubado? Era estranho…
+	
+	Decidiu ficar um pouco mais na sala. Fuçou tudo o que podia, mas a cama era fixada no chão, não havia travesseiros, nenhuma coberta, nada. Não havia outra escolha.
+	Se posicionou em frente ao interruptor e ligou. Por um segundo nada aconteceu e ele pensou “Fodeu”. Contudo parte da parede começou a desaparecer e de repente ela podia ver uma entrada para um longo corredor, todo branco também sem portas e duas saídas. Nem pela direita, nem pela esquerda havia sinais de vida. Ela deveria gritar por alguém?
+
+2. Uma estranha aparição
+
+	“Pela direita!” Logo após o primeiro passo à direita uma alma penada apareceu na saída da esquerda. Era um homem, sem expressões, com um andar pesado e lendo, um cheiro estranho o acompanhava. Estava sujo e nojento, suas roupas rasgadas e marcadas de sangue. Ela não iria fica pra dizer oi?!, mas era a primeira pessoa que tinha visto:
+	– Senhor? Posso te ajudar? Ou você me ajudar? Acho que estou meio perdida aqui…
+	Então a alma penada respondeu, mas foi uma daquelas resposta que seria melhor não ter tido nenhuma resposta em troca.
+	– Se, … Senhorita… Vá! Apenas vá, fuja da.. qui. Eu não estou bem, talvez já seja tarde para mim, vá, eu irei mudar logo. Um.. um vir …rus.
+	Ele começou a tossir, colocou as mãos no peito e após gemer um pouco caiu duro no chão.
+
+	“Como assim?! Um vírus? Isso é demais pra mim…” Sua cabeça estava confusa tentando processar tudo aquilo que estava acontecendo. Ele parecia ainda estar respirando, mas ela tinha medo de se aproximar.
+
+    
