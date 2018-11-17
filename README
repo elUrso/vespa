@@ -29,6 +29,13 @@ Além disso existe arquivos .test.c que contém código para testar os módulos.
 
 Para montar o programa, use make ou make vespa, para testar, use make test.
 
+## arquivos importantes:
+
+Como tem muita coisa pra ver, alguns arquivos cruciais para a compreensão do código são:
+    - m.h : contém a API de orientação objeto utilizada no projeto
+    - place.c : ajuda a entender como as classes/objetos são implementadas
+    - query.c : contém a parte de história do jogo
+
 
 ## Para testar:
 
@@ -74,4 +81,4 @@ A vespa
 
 	“Como assim?! Um vírus? Isso é demais pra mim…” Sua cabeça estava confusa tentando processar tudo aquilo que estava acontecendo. Ele parecia ainda estar respirando, mas ela tinha medo de se aproximar.
 
-    
+
