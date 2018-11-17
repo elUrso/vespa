@@ -1,7 +1,7 @@
 CC=gcc
 FLAGS=-g -O3 -Wall
-OBJS=m.o str.o list.o element.o place.o out.o object.o bool.o
-TESTS=list.test.o element.test.o place.test.o out.test.o object.test.o
+OBJS=m.o str.o list.o element.o place.o out.o object.o bool.o query.o player.o
+TESTS=list.test.o element.test.o place.test.o out.test.o object.test.o player.test.o
 
 vespa: $(OBJS)
 	$(CC) main.c $(OBJS) $(FLAGS) -o vespa
@@ -20,6 +20,8 @@ test: $(OBJS) $(TESTS)
 	./test.out && echo "Out Passed" || echo "Out Failed";
 	$(CC) object.test.o $(OBJS) -o test.object
 	./test.object && echo "Object Passed" || echo "Object Failed";
+	$(CC) player.test.o $(OBJS) -o test.player
+	./test.player && echo "Player Passed" || echo "Player Failed";
 
 clear:
 	rm *.o
