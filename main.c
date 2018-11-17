@@ -7,6 +7,7 @@
 #include "object.h"
 #include "place.h"
 #include "out.h"
+#include "query.h"
 
 struct {
     char autoquery;
@@ -23,7 +24,12 @@ int main(int argc, char **argv) {
     }
     
     if(game_state.autoquery) puts("AutoQuery Mode is Set");
+    
+    MObj * query = Mnew(MQuery, Mpack(&false, "bool", NULL));
 
+    game:
+        Mcall(query, "eval", NULL);
+    goto game;
 
-    /*game loop*/
+    return 0;
 }
