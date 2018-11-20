@@ -1,6 +1,6 @@
 MAC0216 - TecProg
 
-Projeto VESPA
+# Projeto VESPA
 
 Esse projeto está sendo realizado pelos alunos:
 
@@ -15,7 +15,7 @@ nºUSP 09833002
 O projeto está sendo feito utilizando make e uma biblioteca de autoria do grupo chamada de Meta Library.
 Ela já foi apresentada ao professor Gubi que pediu que explicasse seu funcionamento de forma breve já que ela altera parte da estrutura do programa.
 
-A Meta library adicionas algumas funcionalidades de Orientação Objeto ao projeto e com os próprios verbos de ação já ficam implementados dentro do funcionamento da biblioteca.
+A Meta library adicionas algumas funcionalidades de Orientação Objeto ao projeto e com isso os próprios verbos de ação já ficam implementados dentro do funcionamento da biblioteca.
 
 A biblioteca basicamente gera meios uniformes de chamar métodos dos objetos e é bem similar ao Smalltalk, onde os comando são enviados num formato de mensagem.
 
@@ -23,13 +23,13 @@ No caso, Mcall é um método que recebe o alvo, a string que identifica o métod
 
 O MPack é do estilo de lista ligada e fica no heap.
 
-Os objetos são definidos usando funções 'factory', e por isso nos seus .h só tem uma declaração.
+Os objetos são definidos usando funções 'factory', e por isso nos seus .h só tem uma declaração no geral.
 
 Além disso existe arquivos .test.c que contém código para testar os módulos.
 
 O estado dos objetos no geral fica numa struct chamada de state em $OBJ.c.
 
-Mas todos os objetos contém uma lista de objetos, o que faz com que nem tudo precise ser declarado dentro dessa struct.
+Mas todos os objetos contém uma lista de elementos, o que faz com que nem tudo precise ser declarado dentro dessa struct.
 
 Para montar o programa, use make ou make vespa, para testar, use make test.
 
@@ -47,14 +47,14 @@ Como nesse momento o jogo é para rodar uma simulação, ao executar o ./vespa, 
 
 ## História
 
-Para essa estapa estamos usando uma ideia de uma amiga, então os créditos da ideia é dela. Mas a históira é de autoria e feita com consultoria da idealizadora para manter o espírito.
+Para essa etapa estamos usando uma ideia de uma amiga, então os créditos da ideia é dela. Mas a históira é de autoria e feita com consultoria da idealizadora para manter o espírito.
 O conceito explora uma espécie de vespa que tem um veneno "zumbificador", que faz com que o inseto alvo tenha o cérebro hackeado e entre em modo de "comer apenas". Ela injeta seu ovos no inserto que vai comendo até que os ovos racham e ele é comido vivo.
 
 Um laboratório estaria fazendo pesquisas para usar parte do mecanismo do veneno em seres humanos e assim vai.
 
 O jogo nesse caso se passa no começo de um problema que acaba ocorrendo nos laboratórios e o objetivo do jogador é escapar de lá vivo.
 
-Para estruturar o jogo está sendo escrito uma história em formato de narrativa linear e por isso da pra contar a história tanto jogando quando lendo.
+Para estruturar o jogo está sendo escrito uma história em formato de narrativa linear e por isso da pra contar a história tanto jogando quanto lendo.
 
 Agora seguem os primeiros trechos escritos:
 
@@ -101,3 +101,7 @@ floor -3....................|..|................................................
 					   preparation-------------------staff---deposit
 					        |                          |
 					        |------memory_management---|
+
+## Notas
+
+Diversos objetos serão adicionados nas próximas fases do projeto e um sistema mais avançado de trigger está sendo planejado
