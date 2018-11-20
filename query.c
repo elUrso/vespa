@@ -1,7 +1,10 @@
 #include "query.h"
 #include "player.h"
 #include "element.h"
+#include "out.h"
+#include "button.h"
 #include "place.h"
+#include "list.h"
 #include "str.h"
 
 #include <stdio.h>
@@ -28,6 +31,8 @@ struct state {
     int state;
 };
 
+MObj * helper[200];
+
 /* Define methods names */
 
 static char * methods[2] = {
@@ -42,13 +47,53 @@ static void * _eval (void * _self, void * _arg) {
     struct state * state = self->_state;
     switch(state->state) {
         case 1:
-            printf("%s\n\n", Mcall(state->intro, "get name", NULL));
-            printf("%s\n\n", Mcall(state->intro, "get Desc", NULL));
+            printf("%s\n\n", (char *) Mcall(state->intro, "get name", NULL));
+            printf("%s\n\n", (char *) Mcall(state->intro, "get Desc", NULL));
         break;
         case 2:
             place = Mcall(state->player, "get location", NULL);
             printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
-            /*Listar objetos das sala na primeira visita*/
+            MObj * list = Mcall(place, "get List", NULL);
+            puts("Lista de objetos:");
+            int i = 0;
+            for(struct MList_node * p = Mcall(list, "get head", NULL); p != NULL; p = p->next) {
+                MObj * element = p->value;
+                if(Mcall(element, "get visibility", NULL) == &true) {
+                    i++;
+                    printf("%d\t%s %s\n", i, (char *) Mcall(element, "get ai", NULL), (char *) Mcall(element, "get name", NULL));
+                }
+            }
+            if(i == 0) puts("Não há objetos");
+            puts("");
+        break;
+        case 3:
+        case 5:
+            puts("% saídas");
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            list = Mcall(place, "get paths", NULL);
+            puts("Lista de saídas:");
+            i = 0;
+            for(struct MList_node * p = Mcall(list, "get head", NULL); p != NULL; p = p->next) {
+                MObj * element = p->value;
+                if(Mcall(element, "get enabled", NULL) == &true) {
+                    i++;
+                    printf("%d\t%s %s\n", i, (char *) Mcall(element, "get ai", NULL), (char *) Mcall(element, "get name", NULL));
+                }
+            }
+            if(i == 0) puts("Não há saídas");
+            puts("");
+        break;
+        case 4:
+            puts("% apertar o botão");
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            /*later replace it with: get object: botao*/
+            Mcall(helper[0], "set state", Mpack(&i_true, "int", NULL));
+            puts("");
+        break;
+        case 6:
+
         break;
         case 200:
             return &false;
@@ -101,6 +146,23 @@ MObj * MQuery (MObj * self, MPack * arg) {
     state->rooms.deposit = Mnew(MPlace, Mpack("Depósito", "str", Mpack("M", "str", Mpack("várias caixas", "str", Mpack("Várias caixas, mas a maioria parece estar vazia", "str", NULL)))));
     state->rooms.memory_management = Mnew(MPlace, Mpack("Sala de operação", "str", Mpack("F", "str", Mpack("tem duas capsulas", "str", Mpack("Não dá pra descrever muito bem, mas tem duas capsulas e é um local bem frio", "str", NULL)))));
     Mcall(state->player, "set location", Mpack(state->rooms.patient_3, "Obj", NULL));
+    
+    /*patient_3 outs*/
+    MObj * outs = Mcall(state->rooms.patient_3, "get paths", NULL);
+    MObj * out = Mnew(MOut, Mpack(state->rooms.corridor, "Obj", Mpack("porta", "str", Mpack("F", "str", Mpack("vai para o corredor", "str", Mpack("vai para o corredor", "str", NULL))))));
+    Mcall(out, "set enabled", Mpack(&i_false, "int", NULL));
+    Mcall(outs, "insert", Mpack(out, "MObj", Mpack("door", "str", NULL)));
+    /*patient_3 objects*/
+    MObj * list = Mcall(state->rooms.patient_3, "get List", NULL);
+    MObj * button = Mnew(MButton, Mpack("botão", "str", Mpack("M", "str", Mpack("é um botão", "str", Mpack("É um botão, talvez de pra apertar", "str", NULL)))));
+    Mcall(button, "set trigger", Mpack("Uma porta se abriu", "str", Mpack(out, "Obj", Mpack("set enabled", "str", Mpack(&i_true, "int", NULL)))));
+    Mcall(button, "set state", Mpack(&i_false, "int", NULL));
+    Mcall(button, "set visibility", Mpack(&i_true, "int", NULL));
+    Mcall(list, "insert", Mpack(button, "MObj", Mpack("button", "str", NULL)));
+    helper[0] = button;
+
+
+
     /*convetion*/
     Mpack_free(arg);
 
