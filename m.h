@@ -41,5 +41,7 @@ MObj * Mpack_Obj(MPack * arg);
 
 extern char true;
 extern char false;
+extern int i_true;
+extern int i_false;
 
 #endif
