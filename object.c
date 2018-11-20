@@ -11,11 +11,12 @@
 struct state {
     char * adj;
     char bool_visible;
+    char bool_carry;
 };
 /* Define methods names */
 
-static char * methods[3] = {
-    "get visibility", "set visibility", NULL
+static char * methods[5] = {
+    "get visibility", "set visibility", "get carry", "set carry", NULL
 };
 
 /* Define methods itselves */
@@ -35,9 +36,23 @@ static void * _set_visibility (void * _self, void * _arg) {
     return (state->bool_visible)? &true: &false;
 }
 
+static void * _get_carry (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    return (state->bool_carry)? &true: &false;
+}
 
-static void * (* action[2]) (void * self, void * arg) = {
-    _get_visibility, _set_visibility, 
+static void * _set_carry (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    MPack * arg = _arg;
+    char i = Mpack_int(arg);
+    state->bool_carry = i;
+    return (state->bool_carry)? &true: &false;
+}
+
+static void * (* action[4]) (void * self, void * arg) = {
+    _get_visibility, _set_visibility, _get_carry, _set_carry
 };
 
 static char * class = "Object";
@@ -54,6 +69,7 @@ MObj * MObject (MObj * self, MPack * arg) {
     struct state * state = malloc(sizeof(struct state));
 
     state->bool_visible = 1;
+    state->bool_carry = 0;
 
 
     self->_methods = methods;
