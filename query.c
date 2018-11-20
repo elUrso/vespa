@@ -2,6 +2,7 @@
 #include "player.h"
 #include "element.h"
 #include "out.h"
+#include "object.h"
 #include "button.h"
 #include "place.h"
 #include "list.h"
@@ -51,6 +52,7 @@ static void * _eval (void * _self, void * _arg) {
             printf("%s\n\n", (char *) Mcall(state->intro, "get Desc", NULL));
         break;
         case 2:
+        case 7:
             place = Mcall(state->player, "get location", NULL);
             printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
             MObj * list = Mcall(place, "get List", NULL);
@@ -68,6 +70,7 @@ static void * _eval (void * _self, void * _arg) {
         break;
         case 3:
         case 5:
+        case 12:
             puts("% saídas");
             place = Mcall(state->player, "get location", NULL);
             printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
@@ -93,7 +96,82 @@ static void * _eval (void * _self, void * _arg) {
             puts("");
         break;
         case 6:
+            puts("% sair pela porta");
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            Mcall(state->player, "set location", Mpack(Mcall(helper[1], "get out", NULL), "Obj", NULL));
+            puts("");
+        break;
+        case 8:
+            puts("% examinar o defunto");
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            /*Create a trigger to make examination of the defunct enables the visibility of a card*/
+            printf("Observação: %s\n", (char *) Mcall(helper[3], "get Desc", NULL));
+            puts("Você observa algo novo!");
+            Mcall(helper[4], "set visibility", Mpack(&i_true, "int", NULL));
+            list = Mcall(place, "get List", NULL);
+            puts("Lista de objetos:");
+            i = 0;
+            for(struct MList_node * p = Mcall(list, "get head", NULL); p != NULL; p = p->next) {
+                MObj * element = p->value;
+                if(Mcall(element, "get visibility", NULL) == &true) {
+                    i++;
+                    printf("%d\t%s %s\n", i, (char *) Mcall(element, "get ai", NULL), (char *) Mcall(element, "get name", NULL));
+                }
+            }
+            if(i == 0) puts("Não há objetos");
+            puts("");
 
+        break;
+        case 9:
+            puts("% pegar o defunto");
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            /*Add personalized reply field later*/
+            if(Mcall(helper[3], "get carry", NULL) == &true) {
+                puts("Isso não vai acontecer, hahaahhah");
+            } else {
+                puts("Você não quis dizer \"pergar\" o defunto?");
+            }
+            puts("");
+        break;
+        case 10:
+            puts("% \"pegar\" o defunto");
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            /*Add personalized reply field later*/
+            puts("Isso foi meio errado...");
+            puts("");
+        break;
+        case 11:
+            puts("% \"pegar\" o cartão");
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            list = Mcall(place, "get List", NULL);
+            MObj * player_list = Mcall(state->player, "get List", NULL);
+            Mcall(player_list, "insert", Mpack(Mcall(list, "remove", Mpack("cartao", "str", NULL)), "MObj", Mpack("cartao", "str", NULL)));
+            /*Add personalized reply field later*/
+            puts("Lista de objetos do jogador:");
+            i = 0;
+            for(struct MList_node * p = Mcall(player_list, "get head", NULL); p != NULL; p = p->next) {
+                MObj * element = p->value;
+                if(Mcall(element, "get visibility", NULL) == &true) {
+                    i++;
+                    printf("%d\t%s %s\n", i, (char *) Mcall(element, "get ai", NULL), (char *) Mcall(element, "get name", NULL));
+                }
+            }
+            if(i == 0) puts("Não há objetos");
+            puts("");
+            puts("");
+        break;
+        case 13:
+            puts("% sair pela saída da direita");
+            /*Add trigger when the player leave the corridor*/
+            place = Mcall(state->player, "get location", NULL);
+            printf("Local: %s\nDescrição: %s\n", (char *) Mcall(place, "get name", NULL), (char *) Mcall(place, "get Desc", NULL));
+            Mcall(state->player, "set location", Mpack(Mcall(helper[1], "get out", NULL), "Obj", NULL));
+            puts("");
         break;
         case 200:
             return &false;
@@ -146,7 +224,7 @@ MObj * MQuery (MObj * self, MPack * arg) {
     state->rooms.deposit = Mnew(MPlace, Mpack("Depósito", "str", Mpack("M", "str", Mpack("várias caixas", "str", Mpack("Várias caixas, mas a maioria parece estar vazia", "str", NULL)))));
     state->rooms.memory_management = Mnew(MPlace, Mpack("Sala de operação", "str", Mpack("F", "str", Mpack("tem duas capsulas", "str", Mpack("Não dá pra descrever muito bem, mas tem duas capsulas e é um local bem frio", "str", NULL)))));
     Mcall(state->player, "set location", Mpack(state->rooms.patient_3, "Obj", NULL));
-    
+
     /*patient_3 outs*/
     MObj * outs = Mcall(state->rooms.patient_3, "get paths", NULL);
     MObj * out = Mnew(MOut, Mpack(state->rooms.corridor, "Obj", Mpack("porta", "str", Mpack("F", "str", Mpack("vai para o corredor", "str", Mpack("vai para o corredor", "str", NULL))))));
@@ -160,9 +238,36 @@ MObj * MQuery (MObj * self, MPack * arg) {
     Mcall(button, "set visibility", Mpack(&i_true, "int", NULL));
     Mcall(list, "insert", Mpack(button, "MObj", Mpack("button", "str", NULL)));
     helper[0] = button;
+    helper[1] = out;
 
+    /*corridor outs*/
+    outs = Mcall(state->rooms.corridor, "get paths", NULL);
+    out = Mnew(MOut, Mpack(state->rooms.patient_3, "Obj", Mpack("porta do quarto 3", "str", Mpack("F", "str", Mpack("vai para o quarto 3", "str", Mpack("vai para o quarto 3", "str", NULL))))));
+    Mcall(out, "set enabled", Mpack(&i_false, "int", NULL));
+    Mcall(outs, "insert", Mpack(out, "MObj", Mpack("door", "str", NULL)));
 
+    out = Mnew(MOut, Mpack(state->rooms.control, "Obj", Mpack("saída da direita", "str", Mpack("F", "str", Mpack("vai para a sala de recuperação", "str", Mpack("vai para a sala de recuperação", "str", NULL))))));
+    Mcall(out, "set enabled", Mpack(&i_true, "int", NULL));
+    Mcall(outs, "insert", Mpack(out, "MObj", Mpack("door", "str", NULL)));
 
+    out = Mnew(MOut, Mpack(state->rooms.recovery, "Obj", Mpack("saída da esquerda", "str", Mpack("F", "str", Mpack("vai para a sala de controle", "str", Mpack("vai para a sala de controle", "str", NULL))))));
+    Mcall(out, "set enabled", Mpack(&i_true, "int", NULL));
+    Mcall(outs, "insert", Mpack(out, "MObj", Mpack("door", "str", NULL)));
+
+    out = Mnew(MOut, Mpack(state->rooms.patient_2, "Obj", Mpack("porta do quarto 2", "str", Mpack("F", "str", Mpack("vai para o quarto 2", "str", Mpack("vai para o quarto 2", "str", NULL))))));
+    Mcall(out, "set enabled", Mpack(&i_false, "int", NULL));
+    Mcall(outs, "insert", Mpack(out, "MObj", Mpack("door", "str", NULL)));
+
+    /*corridor objects*/
+    list = Mcall(state->rooms.corridor, "get List", NULL);
+    MObj * obj = Mnew(MObject, Mpack("defunto", "str", Mpack("M", "str", Mpack("um corpo que aparenta estar morto", "str", Mpack("Apesar de parecer estar morto, com as roupas sujas de sangue, apresenta uma respiração bem lenta", "str", NULL)))));
+    Mcall(obj, "set visibility", Mpack(&i_true, "int", NULL));
+    Mcall(list, "insert", Mpack(obj, "MObj", Mpack("defunto", "str", NULL)));
+    helper[3] = obj;
+    obj = Mnew(MObject, Mpack("cartão", "str", Mpack("M", "str", Mpack("um cartão", "str", Mpack("Um cartão, deve servir pra abir alguma coisa", "str", NULL)))));
+    Mcall(obj, "set visibility", Mpack(&i_false, "int", NULL));
+    Mcall(list, "insert", Mpack(obj, "MObj", Mpack("cartao", "str", NULL)));
+    helper[4] = obj;
     /*convetion*/
     Mpack_free(arg);
 
