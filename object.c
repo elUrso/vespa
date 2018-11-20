@@ -40,7 +40,7 @@ static void * (* action[2]) (void * self, void * arg) = {
     _get_visibility, _set_visibility, 
 };
 
-static char * class = "Place";
+static char * class = "Object";
 
 static void _free (void * _self) {
     MObj * self = (MObj *) _self;
