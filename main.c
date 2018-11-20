@@ -28,8 +28,8 @@ int main(int argc, char **argv) {
     MObj * query = Mnew(MQuery, Mpack(&false, "bool", NULL));
 
     game:
-        Mcall(query, "eval", NULL);
+        if(Mcall(query, "eval", NULL) == &false) goto end;
     goto game;
-
+    end:
     return 0;
 }

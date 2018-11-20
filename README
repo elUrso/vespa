@@ -27,6 +27,10 @@ Os objetos são definidos usando funções 'factory', e por isso nos seus .h só
 
 Além disso existe arquivos .test.c que contém código para testar os módulos.
 
+O estado dos objetos no geral fica numa struct chamada de state em $OBJ.c.
+
+Mas todos os objetos contém uma lista de objetos, o que faz com que nem tudo precise ser declarado dentro dessa struct.
+
 Para montar o programa, use make ou make vespa, para testar, use make test.
 
 ## arquivos importantes:
@@ -81,4 +85,19 @@ A vespa
 
 	“Como assim?! Um vírus? Isso é demais pra mim…” Sua cabeça estava confusa tentando processar tudo aquilo que estava acontecendo. Ele parecia ainda estar respirando, mas ela tinha medo de se aproximar.
 
+(To be continue...)
 
+## Mapa
+
+floor -2 .......................................................................
+                       |--control---|
+patient_2 |            |            |
+patient_3 |--corridor--|         elevator
+                       |            |
+			           |--recovery--|
+			                |a |b
+floor -3....................|..|................................................
+							|  |
+					   preparation-------------------staff---deposit
+					        |                          |
+					        |------memory_management---|
