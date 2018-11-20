@@ -1,4 +1,4 @@
-CC=gcc-8
+CC=gcc
 FLAGS=-g -O3 -Wall
 OBJS=m.o str.o list.o element.o place.o out.o object.o bool.o query.o player.o button.o
 TESTS=list.test.o element.test.o place.test.o out.test.o object.test.o player.test.o button.test.o
