@@ -1,3 +1,4 @@
 *.o
 vespa
 test.*
+vespa.dSYM/Contents/Info.plist
