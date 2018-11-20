@@ -18,10 +18,11 @@ struct state {
 
 /* Define methods names */
 
-static char * methods[4] = {
+static char * methods[5] = {
     "insert",
     "query",
     "remove",
+    "get head",
     NULL
 };
 
@@ -105,8 +106,14 @@ static void * _remove (void * _self, void * _arg) {
     return q;
 }
 
-static void * (* action[3]) (void * self, void * arg) = {
-    insert, query, _remove
+static void * _get_head (void * _self, void * _arg) {
+    MObj * self = (MObj *) _self;
+    struct state * state = self->_state;
+    return state->head;
+}
+
+static void * (* action[4]) (void * self, void * arg) = {
+    insert, query, _remove, _get_head
 };
 
 static char * class = "List";
