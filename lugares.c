@@ -1,7 +1,6 @@
 Elemento sala   = {"sala", "um pequeno escritório de trabalho", "sala pequena", NULL, LUGAR, .Det.lug.Saidas =  {NULL, NULL, NULL, NULL, NULL,NULL}, .visto = 0};
 Elemento quarto = {"quarto", "um grande quarto bagunçado", "quarto enorme", NULL, LUGAR, .Det.lug.Saidas =  {NULL, NULL, &sala, NULL, &sala, NULL}, .visto = 0};
 
-
 Elemento sotao = {
   .nome = "sotao",
   .genero = 'M',
@@ -21,6 +20,14 @@ Elemento sotao = {
   .animacao = NULL
 };
 
+static void jump_scare (Elemento * self , Elemento * ctx) {
+    static int lock = 1;
+    if(Posic == self && lock) {
+      lock = 0;
+      zumbi.Det.obj.estado = 1000;
+    }
+}
+
 Elemento porao = {
   .nome = "porao",
   .genero = 'M',
@@ -38,7 +45,14 @@ Elemento porao = {
           /*B*/NULL}
   },
   /*add trigger to spawn the zombie*/
-  .animacao = NULL
+  .animacao = jump_scare
+};
+
+struct tick evento_jump = {
+    .function = jump_scare,
+    .self = &porao,
+    .ctx = NULL,
+    .next = NULL
 };
 
 Elemento telhado = {

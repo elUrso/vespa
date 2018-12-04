@@ -10,8 +10,8 @@ Elemento arma    = {
     .visivel = 1,
     .estado = 0
   },
-  .animacao = NULL
-  .pegavel = 1;
+  .animacao = NULL,
+  .pegavel = 1
 };
 
 static void tock (Elemento * self , Elemento * ctx) {
@@ -30,8 +30,8 @@ Elemento relogio    = {
     .visivel = 1,
     .estado = 0
   },
-  .animacao = tock
-  .pegavel = 1;
+  .animacao = tock,
+  .pegavel = 1
 };
 
 struct tick evento_tick = {
@@ -78,8 +78,8 @@ Elemento zumbi    = {
     .estado = 0
   },
   .animacao = zumbi_move,
-  .pos = NULL
-  .pegavel = 0;
+  .pos = NULL,
+  .pegavel = 0
 };
 
 struct tick evento_zumbi = {

@@ -195,8 +195,15 @@ symrec*  init_table(symrec *sym_table)
 {
   /*fix exits*/
   sala.Det.lug.Saidas[4] = &sotao;
-  sotao.Det.lug.Saidas[5] = &sala;
+  sala.Det.lug.Saidas[5] = &porao;
+  sala.Det.lug.Saidas[2] = &cozinha;
   sala.Det.lug.Saidas[3] = &quarto;
+  porao.Det.lug.Saidas[4] = &sala;
+  cozinha.Det.lug.Saidas[3] = &sala;
+  sotao.Det.lug.Saidas[5] = &sala;
+  sotao.Det.lug.Saidas[4] = &telhado;
+  telhado.Det.lug.Saidas[5] = &sotao;
+
 
   int i;
   symrec *ptr = sym_table;		/* cabeça da lista */
@@ -235,7 +242,8 @@ symrec*  init_table(symrec *sym_table)
 
 struct tick * init_animation() {
   animation_init:
-  evento_tick.next = &evento_zumbi;
+  evento_jump.next = &evento_zumbi;
+  evento_tick.next = &evento_jump;
   return &evento_tick;
 }
 
