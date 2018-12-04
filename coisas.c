@@ -187,6 +187,9 @@ struct initlug llugs[] = {
   {"quarto",  &quarto},
   {"sala",    &sala},
   {"sotao",   &sotao},
+  {"porao",   &porao},
+  {"cozinha",   &cozinha},
+  {"telhado",   &telhado},
   { 0, 0}
 };
 
@@ -200,6 +203,7 @@ symrec*  init_table(symrec *sym_table)
   sala.Det.lug.Saidas[3] = &quarto;
   porao.Det.lug.Saidas[4] = &sala;
   cozinha.Det.lug.Saidas[3] = &sala;
+  quarto.Det.lug.Saidas[2] = &sala;
   sotao.Det.lug.Saidas[5] = &sala;
   sotao.Det.lug.Saidas[4] = &telhado;
   telhado.Det.lug.Saidas[5] = &sotao;

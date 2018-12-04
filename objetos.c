@@ -54,7 +54,11 @@ static void zumbi_move (Elemento * self , Elemento * ctx) {
         self->pos = Posic;
         self->Det.obj.estado = 0;
         limit--;
-        printf("Ahhhh! Um zumbi está em %s!!!\n", self->pos->nome);
+        if(self->pos->genero == 'M')
+          printf("Ahhhh! Um zumbi está no %s!!!\n", self->pos->nome);
+        else
+          printf("Ahhhh! Um zumbi está na %s!!!\n", self->pos->nome);
+        
     }
     if(self->Det.obj.estado < 0) {
       puts("Ele vai te pegar!");

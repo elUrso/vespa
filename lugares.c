@@ -1,5 +1,40 @@
-Elemento sala   = {"sala", "um pequeno escritório de trabalho", "sala pequena", NULL, LUGAR, .Det.lug.Saidas =  {NULL, NULL, NULL, NULL, NULL,NULL}, .visto = 0};
-Elemento quarto = {"quarto", "um grande quarto bagunçado", "quarto enorme", NULL, LUGAR, .Det.lug.Saidas =  {NULL, NULL, &sala, NULL, &sala, NULL}, .visto = 0};
+Elemento sala = {
+  .nome = "sala",
+  .genero = 'F',
+  .longa = "Rustica e aconchegante, mas há marcas de sangue pelo chão",
+  .curta = "Aquele sangue não é meu...",
+  .cont = NULL,
+  .tipo = LUGAR,
+  .Det.lug = {
+      .Saidas = {
+          /*N*/NULL,
+          /*S*/NULL,
+          /*L*/NULL,
+          /*O*/NULL,
+          /*C*/NULL,
+          /*B*/NULL}
+  },
+  .animacao = NULL
+};
+
+Elemento quarto = {
+  .nome = "quarto",
+  .genero = 'M',
+  .longa = "Até que o quarto é grande, mas está bem vazio",
+  .curta = "mm quarto",
+  .cont = NULL,
+  .tipo = LUGAR,
+  .Det.lug = {
+      .Saidas = {
+          /*N*/NULL,
+          /*S*/NULL,
+          /*L*/NULL,
+          /*O*/NULL,
+          /*C*/NULL,
+          /*B*/NULL}
+  },
+  .animacao = NULL
+};
 
 Elemento sotao = {
   .nome = "sotao",
@@ -58,8 +93,8 @@ struct tick evento_jump = {
 Elemento telhado = {
   .nome = "telhado",
   .genero = 'M',
-  .longa = "Parece um lugar bem vazio, mas deve ter algo de útil",
-  .curta = "Quanta caixa?! tudo vazia...",
+  .longa = "Rapaz, ta frio aqui fora, além de ser muito alto pra pular",
+  .curta = "Não rola pular...",
   .cont = NULL,
   .tipo = LUGAR,
   .Det.lug = {
@@ -75,10 +110,10 @@ Elemento telhado = {
 };
 
 Elemento cozinha = {
-  .nome = "sotao",
+  .nome = "cozinha",
   .genero = 'M',
-  .longa = "Parece um lugar bem vazio, mas deve ter algo de útil",
-  .curta = "Quanta caixa?! tudo vazia...",
+  .longa = "Agora sangue vai rolar, tem muita faca aqui!",
+  .curta = "É uma faca ali?!",
   .cont = NULL,
   .tipo = LUGAR,
   .Det.lug = {
