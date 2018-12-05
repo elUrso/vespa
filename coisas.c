@@ -103,7 +103,7 @@ void Examinar(Elemento *o1, Elemento *o2) {
       folheto.Det.obj.estado++;
     } else {
       folheto.Det.obj.ativo = 1;
-      puts("Parece que não está tão vazio assim :P")
+      puts("Parece que não está tão vazio assim :P");
     }
   }
   /* o default é descrever o local atual */
