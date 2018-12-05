@@ -1,0 +1,38 @@
+MAC0216 - TecProg
+
+# Projeto VESPA - Parte III
+
+Esse projeto está sendo realizado pelos alunos:
+
+Vitor Pereira da Silva
+nºUSP 10263531
+
+Lucas Medeiros Sobrinho de Sousa
+nºUSP 09833002
+
+## Organização do projeto
+
+A versão da parte II foi realizada utilizando uma biblioteca interna de orientação objeto com um certo nível de complexidade e devido aos prazos e código base dados pelo profº, decidimos refatorar o código em busca de simplificar as estruturas e reduzir a quantidade de código.
+
+Isso exigiu uma grande remodelação do projeto que já não conta mais com o sistema de herança proveniente da Meta-Library.
+
+A estrutura é em suma a entregue pelo Gubi com algumas extensões na parte de variáveis internas e inclusão do sistema de animação.
+
+## História
+
+A história teve algumas alterações para ficar mais interessante, mas segue o mesmo tema.
+Dessa vez o objetivo ficou mais curioso, pois tem desafio de tempo.
+
+Como temos animações, vide main.c:animation_loop e coisas.c:animation_init, deu pra fazer coisas mais ousadas. A ideia é que tem um zumbi e ele se mexe a cada K commandos. Se ele estiver na mesma sala que o jogador por mais de 2 comandos o jogador perde. K começa valendo 8 e vai reduzindo a cada teleporte.
+
+Sua missão é escapar vivo do lugar sem que o zumbi te pegue.
+Tem vários lugares e como o tempo é limitado, você pode acabar ficandoo meio perdido, hehe.
+
+Mas a gente tem um mapa.
+        telhado 
+           C
+         porão
+           C
+quarto L sala L cozinha
+           B
+        porao 

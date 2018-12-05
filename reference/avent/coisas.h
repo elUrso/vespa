@@ -2,6 +2,7 @@
 typedef struct {
   short int ativo;
   short int visivel;
+  short int estado;
 } Objeto;
 
 
@@ -13,6 +14,7 @@ typedef struct lugar {
 /* Estrutura geral para Elementos */
 typedef struct elemento {
   char *nome;
+  char genero;
   char *longa;
   char *curta;
   symrec *cont;
@@ -21,6 +23,7 @@ typedef struct elemento {
 	Objeto obj;
 	Lugar lug;
   } Det;						/* detalhe */
+  void (*animacao) (struct elemento *, struct elemento *);
 } Elemento;
 
 
@@ -31,7 +34,6 @@ typedef void (*Fptr)(Elemento *, Elemento *);
    de protótipos aqui, mas poderiam ser colocados
 */
 void Examinar(Elemento *, Elemento *);
-
 
 extern Elemento* Posic;			/* Posição atual */
 

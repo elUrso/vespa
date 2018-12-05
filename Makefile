@@ -1,5 +1,5 @@
 LOADLIBES= -lfl -lreadline
-CFLAGS=-Wall -g
+CFLAGS=-Wall -o3 -g
 
 %.c: %.y
 	bison $<
@@ -14,5 +14,7 @@ aventl.o: aventl.l avent.c
 clean:
 	rm -f avent *tab* *.o *~ avent.c avent.tgz
 
-dist:
-	tar czf avent.tgz aventl.l avent.y coisas.c coisas.h main.c symrec.c symrec.h Makefile
+run:
+	make avent
+	./avent
+	make clean
