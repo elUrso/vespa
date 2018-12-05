@@ -98,6 +98,14 @@ void Largar(Elemento *o1, Elemento *o2) {
 void Examinar(Elemento *o1, Elemento *o2) {
   symrec *ptr;
 
+  if(Posic == &quarto) {
+    if(folheto.Det.obj.estado < 3) {
+      folheto.Det.obj.estado++;
+    } else {
+      folheto.Det.obj.ativo = 1;
+      puts("Parece que não está tão vazio assim :P")
+    }
+  }
   /* o default é descrever o local atual */
   if (o1 == NULL || o1 == Posic) {
 	Olhar(NULL, NULL);
@@ -142,6 +150,43 @@ void HoraRelogio(Elemento *o1, Elemento *o2) {
     puts("catorze pras vinte e oito");
 }
 
+void AbrirPorta(Elemento *o1, Elemento *o2) {
+  if(relogio.Det.obj.estado == 0) {
+    puts("A porta se abriu, corra livre e feliz! Você escapou.\nCongratulations, you´re a WINNER! (^o^)");
+    exit(EXIT_SUCCESS);
+  } else
+    puts("Ela não quis abrir");
+}
+
+void Atirar(Elemento *o1, Elemento *o2) {
+  static int life = 2;
+  if(getsym(inventario, "municao") != NULL & zumbi.pos == Posic) {
+    life--;
+    inventario = popsym(inventario, "municao");
+    if(life < 0) {
+      puts("Hahahahah, agora ele morreu! Acho que tu ganhou mermão!\nOmedetô \\(>.<)/");
+      exit(EXIT_SUCCESS);
+    }
+    puts("Você acertou o bixão, mas ele continua em pé");
+    switch(relogio.Det.obj.estado % 4){
+      case 0:
+        quarto.cont = putsym(quarto.cont, "municao", OBJ, &municao);
+      break;
+      case 1:
+        sotao.cont = putsym(sotao.cont, "municao", OBJ, &municao);
+      break;
+      case 2:
+        porao.cont = putsym(porao.cont, "municao", OBJ, &municao);
+      break;
+      case 3:
+        telhado.cont = putsym(telhado.cont, "municao", OBJ, &municao);
+      break;
+    }
+  } else {
+    puts("Ta querendo atirar em quem?!");
+  }
+}
+
 struct initfunc {
   char *fname;
   Fptr fnct;
@@ -160,6 +205,9 @@ struct initfunc lfunc[] = {
   {"grite", Gritar },
   {"berre", Gritar },
   {"hora", HoraRelogio},
+  {"abra", AbrirPorta},
+  {"destranque", AbrirPorta},
+  {"atire", Atirar},
   {0, 0}
 };
 
@@ -173,6 +221,10 @@ struct initobj {
 struct initobj lobjs[] = {
   {"relogio", &relogio},
   {"zumbi", &zumbi},
+  {"porta", &porta},
+  {"municao", &municao},
+  {"arma", &arma},
+  {"mapa", &mapa},
   { 0, 0}
 };
 
@@ -190,6 +242,7 @@ struct initlug llugs[] = {
   {"porao",   &porao},
   {"cozinha",   &cozinha},
   {"telhado",   &telhado},
+  {"folheto",   &folheto},
   { 0, 0}
 };
 
@@ -234,10 +287,18 @@ symrec*  init_table(symrec *sym_table)
   /* Coloca os objetos nos lugares */
   
   sotao.cont = putsym(sotao.cont, "relogio", 	  OBJ, &relogio);
+  cozinha.cont = putsym(cozinha.cont, "porta", OBJ, &porta);
+  porao.cont = putsym(porao.cont, "arma", OBJ, &arma);
+  cozinha.cont = putsym(cozinha.cont, "municao", OBJ, &municao);
+  sala.cont = putsym(sala.cont, "mapa", OBJ, &mapa);
+  quarto.cont = putsym(quarto.cont, "folheto", OBJ, &folheto);
+  
   
 
   /* Ajustes finais */
-  relogio.cont=   putsym(relogio.cont,   "hora", VERBO, HoraRelogio);
+  relogio.cont=   putsym(relogio.cont, "hora", VERBO, HoraRelogio);
+  porta.cont=   putsym(relogio.cont, "abra", VERBO, AbrirPorta);
+  arma.cont=  putsym(relogio.cont, "atire", VERBO, Atirar);
 
   Posic = &quarto;
   /* retorna a nova cabeça da lista */
@@ -246,7 +307,8 @@ symrec*  init_table(symrec *sym_table)
 
 struct tick * init_animation() {
   animation_init:
-  evento_jump.next = &evento_zumbi;
+  evento_jump2.next = &evento_zumbi;
+  evento_jump.next = &evento_jump2;
   evento_tick.next = &evento_jump;
   return &evento_tick;
 }

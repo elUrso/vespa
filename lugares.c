@@ -63,6 +63,14 @@ static void jump_scare (Elemento * self , Elemento * ctx) {
     }
 }
 
+static void jump_scare2 (Elemento * self , Elemento * ctx) {
+    static int lock = 1;
+    if(Posic == self && lock) {
+      lock = 0;
+      zumbi.Det.obj.estado = 1000;
+    }
+}
+
 Elemento porao = {
   .nome = "porao",
   .genero = 'M',
@@ -90,6 +98,8 @@ struct tick evento_jump = {
     .next = NULL
 };
 
+
+
 Elemento telhado = {
   .nome = "telhado",
   .genero = 'M',
@@ -109,10 +119,17 @@ Elemento telhado = {
   .animacao = NULL
 };
 
+struct tick evento_jump2 = {
+    .function = jump_scare,
+    .self = &telhado,
+    .ctx = NULL,
+    .next = NULL
+};
+
 Elemento cozinha = {
   .nome = "cozinha",
   .genero = 'M',
-  .longa = "Agora sangue vai rolar, tem muita faca aqui!",
+  .longa = "Agora sangue vai rolar, tem muita faca aqui! (Você tem medo de faca)",
   .curta = "É uma faca ali?!",
   .cont = NULL,
   .tipo = LUGAR,
@@ -127,3 +144,4 @@ Elemento cozinha = {
   },
   .animacao = NULL
 };
+
